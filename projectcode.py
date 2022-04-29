@@ -92,13 +92,13 @@ def main(file):
         
         #TODO: calculate the locations of the upper and lower FFT peak using get_peak_frqs()
         lower_peak,upper_peak = get_peak_frqs(frq,fft)
-        number = get_number_from_frq(lower_peak,upper_peak)
+        #number = get_number_from_frq(lower_peak,upper_peak)
 
         #TODO: print the values and find the number that corresponds to the numbers
         print("Lower Peak: ",lower_peak)
         print("Upper Peak: ",upper_peak)
-        print("Corresponding Number: ", number)
-        output += str(number)
+        #print("Corresponding Number: ", number)
+        #output += str(number)
 
         #Incrementing the start and end window for FFT analysis
         start_index += int(WINDOW_SIZE*sample_rate)
