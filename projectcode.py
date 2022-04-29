@@ -11,11 +11,9 @@ sys.path.append('/home/pi/Dexter/GrovePi/Software/Python')
 import grovepi
 import grove_rgb_lcd as lcd
 
-lcd.setRGB(0, 128, 0)
+#lcd.setRGB(0, 128, 0)
 
-
-
-from ShazamAPI import Shazam
+#from ShazamAPI import Shazam
 while True:
     try:
 
