@@ -8,7 +8,7 @@ sys.path.append('../../Software/Python/')
 sys.path.append('../../Software/Python/grove_rgb_lcd')
 sys.path.append('/home/pi/Dexter/GrovePi/Software/Python')
 
-#import grovepi
+import grovepi
 import grove_rgb_lcd as lcd
 
 lcd.setRGB(0, 128, 0)
