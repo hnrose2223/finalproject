@@ -9,8 +9,8 @@ from pydub import AudioSegment
 import os
 
 MAX_FRQ = 2000
-SLICE_SIZE = 0.15 #seconds
-WINDOW_SIZE = 0.25 #seconds
+SLICE_SIZE = 1 #seconds
+WINDOW_SIZE = 1 #seconds
 
 sys.path.append('../../Software/Python/')
 sys.path.append('../../Software/Python/grove_rgb_lcd')
