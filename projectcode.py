@@ -3,7 +3,6 @@
 import requests
 import sys
 import time
-import matplotlib.pyplot as plt
 import numpy as np
 from pydub import AudioSegment
 import os
