@@ -39,7 +39,7 @@ def Shzm(mp3):
 		client.publish("audIOT/SHAZAM", Title + "\n" + Artist)
 	except:
 		#print("cannot find song")
-		client.publish("audIOT/SHAZAM","Song Not Detected")
+		client.publish("audIOT/SHAZAM","No Song \nDetected")
 
 
 #records computer microphone and saves as mp3	
