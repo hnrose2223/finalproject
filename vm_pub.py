@@ -34,8 +34,8 @@ def Shzm(mp3):
 	songJSON = (next(recognize_generator))[1]
 	print("test")
 	try: 
-		Title = "Title: "+ songJSON["track"]["title"]
-		Artist = "Artist: " + songJSON["track"]["subtitle"]
+		Title = songJSON["track"]["title"]
+		Artist = songJSON["track"]["subtitle"]
 		client.publish("audIOT/SHAZAM", Title + "\n" + Artist)
 	except:
 		#print("cannot find song")

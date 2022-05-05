@@ -26,6 +26,7 @@ def gpi_setup():
 #LED subscription based on song frequency
 def LED(client, userdata, message):
     #TO DO
+    i = 0
     
 
 #prints Song name and Title on PI LCD screen
