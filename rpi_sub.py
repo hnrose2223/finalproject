@@ -32,7 +32,7 @@ def LED(client, userdata, message):
 #prints Song name and Title on PI LCD screen
 def LCD(client, usedata, message):
     display_string = (str(message.payload, "utf-8"))
-    if(display_string = No Song \nDetected):
+    if(display_string = "No Song \nDetected"):
     	setRGB(64,0,0)
     else:
     	setRGB(0,65,65)
