@@ -15,18 +15,23 @@ from grove_rgb_lcd import *
 def gpi_setup():
     
     #UPDATE
-    """
+
     #led setup
     global PORT_LED
     PORT_LED = 2   # D2 ~ port for LED
     pinMode(PORT_LED, "OUTPUT")
     digitalWrite(PORT_LED, 0)
-    """
+
 
 #LED subscription based on song frequency
 def LED(client, userdata, message):
-    #TO DO
-    i = 0
+    command = int(message.payload, "utf-8")
+    #turn on LED
+    if(command == 1):
+    	digitalWrite(PORT_LED,1)
+    #else turn off LED
+    else:
+    	digitalWrite(PORT_LED,0)
     
 
 #prints Song name and Title on PI LCD screen
