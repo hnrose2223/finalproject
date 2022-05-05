@@ -142,14 +142,9 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
         # Gracefully shutdown on Ctrl-C
         lcd.setText('')
         lcd.setRGB(0, 0, 0)
-
-        # Turn buzzer off just in case
-        grovepi.digitalWrite(PORT_BUZZER, 0)
         
         # Turn LED off before stopping
         digitalWrite(led,0)
-
-        break
 
     except IOError as ioe:
         if str(ioe) == '121':
