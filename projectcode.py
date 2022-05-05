@@ -22,9 +22,9 @@ sys.path.append('/home/pi/Dexter/GrovePi/Software/Python')
 from grovepi import *
 
 # Connect one of the Grove LED to digital port D4
-# Connect another Grove LED to digital port D5
+# Connect another Grove LED to digital port D3
 led = 4
-led2 = 5
+led2 = 3
 
 pinMode(led,"OUTPUT")
 time.sleep(1)
