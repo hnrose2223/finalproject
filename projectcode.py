@@ -95,16 +95,17 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
     print()
     i = 1
     while end_index < len(samples): # not sure if this is the correct format, might have to adjust
-        
-            try:
-                #Blink the LED
-                digitalWrite(led,1)		# Send HIGH to switch on LED
-                print ("LED ON!")
-                time.sleep(1)
+        try:
+            #Blink the LED
+            digitalWrite(led,1)		# Send HIGH to switch on LED
+            print ("LED ON!")
+            time.sleep(1)
 
-                digitalWrite(led,0)		# Send LOW to switch off LED
-                print ("LED OFF!")
-                time.sleep(1)
+            digitalWrite(led,0)		# Send LOW to switch off LED
+            print ("LED OFF!")
+            time.sleep(1)
+            
+            break
         
                 # might have to adjust the above code to get it to work
         
