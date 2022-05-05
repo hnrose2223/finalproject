@@ -19,6 +19,17 @@ sys.path.append('/home/pi/Dexter/GrovePi/Software/Python')
 #import grovepi
 #import grove_rgb_lcd as lcd
 
+from grovepi import *
+
+# Connect one of the Grove LED to digital port D4
+# Connect another Grove LED to digital port D5
+led = 4
+led2 = 5
+
+pinMode(led,"OUTPUT")
+time.sleep(1)
+
+
 #lcd.setRGB(0, 128, 0)
 
 #from ShazamAPI import Shazam
@@ -44,9 +55,12 @@ def get_peak_frqs(frq, fft):
 
     return (get_max_frq(low_frq, low_frq_fft), get_max_frq(high_frq, high_frq_fft))
 
-def main(file):
+def main(file): # we need to be able to load mp3 file from shazam (?)
     print("Importing {}".format(file))
     audio = AudioSegment.from_mp3(file)
+    
+    # Display song name on LCD
+    lcd.setText_norefresh("song name")
 
     sample_count = audio.frame_count()
     sample_rate = audio.frame_rate
@@ -76,13 +90,27 @@ def main(file):
     end_index = start_index + slice_sample_size      #find the ending index for the slice
     output = ''
    
+    
 
     print()
     i = 1
-    while end_index < len(samples):
+    while end_index < len(samples): # not sure if this is the correct format, might have to adjust
+        
+        try:
+            #Blink the LED
+            digitalWrite(led,1)		# Send HIGH to switch on LED
+            print ("LED ON!")
+            time.sleep(1)
+
+            digitalWrite(led,0)		# Send LOW to switch off LED
+            print ("LED OFF!")
+            time.sleep(1)
+        
+        # might have to adjust the above code to get it to work
+        
         print("Sample {}:".format(i))
         i += 1
-
+    
         #TODO: grab the sample slice and perform FFT on it
         sample_slice = samples[start_index: end_index]
         sample_slice_fft = np.fft.fft(sample_slice)/n   #perform fourier transform on sample_slice & normalize by n
@@ -97,8 +125,11 @@ def main(file):
         #TODO: print the values and find the number that corresponds to the numbers
         print("Lower Peak: ",lower_peak)
         print("Upper Peak: ",upper_peak)
-        #print("Corresponding Number: ", number)
-        #output += str(number)
+        
+        if (lower_peak < 1000): # determine a value to separate high frequencies from low frequencies and blink an LED
+            #blink left LED
+        else
+            #blink right LED
 
         #Incrementing the start and end window for FFT analysis
         start_index += int(WINDOW_SIZE*sample_rate)
@@ -106,6 +137,27 @@ def main(file):
 
     print("Program completed")
     print("Decoded input: " + str(output))
+    
+    except KeyboardInterrupt:
+        # Gracefully shutdown on Ctrl-C
+        lcd.setText('')
+        lcd.setRGB(0, 0, 0)
+
+        # Turn buzzer off just in case
+        grovepi.digitalWrite(PORT_BUZZER, 0)
+        
+        # Turn LED off before stopping
+        digitalWrite(led,0)
+
+        break
+
+    except IOError as ioe:
+        if str(ioe) == '121':
+            # Retry after LCD error
+            time.sleep(0.25)
+
+        else:
+            raise
 
 if __name__ == '__main__':
     if len(sys.argv) != 2 or not os.path.isfile(sys.argv[1]):
