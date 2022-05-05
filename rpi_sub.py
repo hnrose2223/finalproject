@@ -25,9 +25,9 @@ def gpi_setup():
 
 #LED subscription based on song frequency
 def LED(client, userdata, message):
-    command = int(message.payload, "utf-8")
+    command = str(message.payload, "utf-8")
     #turn on LED
-    if(command == 1):
+    if(command == "LED_ON"):
     	digitalWrite(PORT_LED,1)
     #else turn off LED
     else:

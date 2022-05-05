@@ -37,11 +37,11 @@ def Shzm(mp3):
 		Title = songJSON["track"]["title"]
 		Artist = songJSON["track"]["subtitle"]
 		client.publish("audIOT/SHAZAM", Title + "\n" + Artist)
-		client.publish("audIOT/FFT",1)
+		client.publish("audIOT/FFT","LED_ON")
 	except:
 		#print("cannot find song")
 		client.publish("audIOT/SHAZAM","No Song \nDetected")
-		client.publish("audIOT/FFT",0)
+		client.publish("audIOT/FFT","LED_OFF")
 
 
 #records computer microphone and saves as mp3	
