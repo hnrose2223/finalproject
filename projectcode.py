@@ -63,17 +63,18 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
     lcd.setText_norefresh("song name")
         #Blink the LED
     digitalWrite(led_right,1)		# Send HIGH to switch on LED
-    print ("RIGHT LED ON!")
+    print ("Flash right LED")
+    time.sleep(1)
+    digitalWrite(led_left,0)		# Send HIGH to switch on LED
+    print ("Flash left LED")
     time.sleep(1)
 
     digitalWrite(led_left,1)		# Send HIGH to switch on LED
-    print ("LEFT LED ON!")
+    print ("Flash left LED")
     time.sleep(1)
-            
-    digitalWrite(led_right,0)		# Send LOW to switch off LED
-    print ("RIGHT LED OFF!")
+    digitalWrite(led_left,0)		# Send HIGH to switch on LED
+    print ("Flash left LED")
     time.sleep(1)
-        # might have to adjust the above code to get it to work
     
     print("Importing {}".format(file))
     audio = AudioSegment.from_mp3(file)
@@ -135,14 +136,14 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
         if (lower_peak < 40): # determine a value to separate high frequencies from low frequencies and blink an LED
             print("right LED")
             digitalWrite(led_right,1)		# Send HIGH to switch on LED
-            print ("RIGHT LED ON!")
-            time.sleep(1)
+            #print ("RIGHT LED ON!")
+            time.sleep(0.1)
             
         if (upper_peak > 200):
             print("left LED")
             digitalWrite(led_left,1)		# Send HIGH to switch on LED
-            print ("LEFT LED ON!")
-            time.sleep(1)
+            #print ("LEFT LED ON!")
+            time.sleep(0.1)
 
         #Incrementing the start and end window for FFT analysis
         start_index += int(WINDOW_SIZE*sample_rate)
