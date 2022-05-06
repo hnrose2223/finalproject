@@ -8,8 +8,8 @@ from pydub import AudioSegment
 import os
 
 MAX_FRQ = 2000
-SLICE_SIZE = 10
-WINDOW_SIZE = 1 #seconds
+SLICE_SIZE = 10 #??
+WINDOW_SIZE = 1 #seconds?
 
 sys.path.append('../../Software/Python/')
 sys.path.append('../../Software/Python/grove_rgb_lcd')
@@ -62,13 +62,14 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
     sample_rate = audio.frame_rate
     samples = audio.get_array_of_samples()
 
-    #print("Number of channels: " + str(audio.channels))
-    #print("Sample count: " + str(sample_count))
-    #print("Sample rate: " + str(sample_rate))
-    #print("Sample width: " + str(audio.sample_width))
+    print("Number of channels: " + str(audio.channels))
+    print("Sample count: " + str(sample_count))
+    print("Sample rate: " + str(sample_rate))
+    print("Sample width: " + str(audio.sample_width))
 
     period = 1/sample_rate                     #the period of each sample
     duration = sample_count/sample_rate         #length of full audio in seconds
+    print("Duration:"+str(duration))
 
     slice_sample_size = int(SLICE_SIZE*sample_rate)   #get the number of elements expected for [SLICE_SIZE] seconds
 
