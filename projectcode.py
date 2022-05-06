@@ -134,7 +134,7 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
     print ("LEFT LED ON!")
     time.sleep(1)
             
-    digitalWrite(led,0)		# Send LOW to switch off LED
+    digitalWrite(led_right,0)		# Send LOW to switch off LED
     print ("RIGHT LED OFF!")
     time.sleep(1)
         
