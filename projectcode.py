@@ -58,6 +58,23 @@ def get_peak_frqs(frq, fft):
     return (get_max_frq(low_frq, low_frq_fft), get_max_frq(high_frq, high_frq_fft))
 
 def main(file): # we need to be able to load mp3 file from shazam (?)
+    
+    lcd.setRGB(0, 128, 0)
+    lcd.setText_norefresh("song name")
+        #Blink the LED
+    digitalWrite(led_right,1)		# Send HIGH to switch on LED
+    print ("RIGHT LED ON!")
+    time.sleep(1)
+
+    digitalWrite(led_left,1)		# Send HIGH to switch on LED
+    print ("LEFT LED ON!")
+    time.sleep(1)
+            
+    digitalWrite(led_right,0)		# Send LOW to switch off LED
+    print ("RIGHT LED OFF!")
+    time.sleep(1)
+        # might have to adjust the above code to get it to work
+    
     print("Importing {}".format(file))
     audio = AudioSegment.from_mp3(file)
     
@@ -126,21 +143,9 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
 
     print("Program completed")
     print("Decoded input: " + str(output))
-    
-    while True:
-        lcd.setRGB(0, 128, 0)
-        lcd.setText_norefresh("song name")
-        #Blink the LED
-        digitalWrite(led_right,1)		# Send HIGH to switch on LED
-        print ("RIGHT LED ON!")
-        time.sleep(1)
-
-        digitalWrite(led_left,1)		# Send HIGH to switch on LED
-        print ("LEFT LED ON!")
-        time.sleep(1)
-            
-        digitalWrite(led_right,0)		# Send LOW to switch off LED
-        print ("RIGHT LED OFF!")
-        time.sleep(1)
         
-        # might have to adjust the above code to get it to work
+if __name__ == '__main__':
+    if len(sys.argv) != 2 or not os.path.isfile(sys.argv[1]):
+        print("Usage: decode.py [file]")
+        exit(1)
+    main(sys.argv[1])
