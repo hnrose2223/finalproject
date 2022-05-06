@@ -32,7 +32,7 @@ pinMode(led_left,"OUTPUT")
 time.sleep(1)
 
 
-lcd.setRGB(128, 128, 0)
+lcd.setRGB(0, 128, 0)
 
 #from ShazamAPI import Shazam
 
@@ -96,6 +96,7 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
 
     print()
     i = 1
+    
     while end_index < len(samples): # not sure if this is the correct format, might have to adjust
         
         print("Sample {}:".format(i))
@@ -128,17 +129,19 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
     print("Program completed")
     print("Decoded input: " + str(output))
     
+    while True:
+    
         #Blink the LED
-    digitalWrite(led_right,1)		# Send HIGH to switch on LED
-    print ("RIGHT LED ON!")
-    time.sleep(1)
+        digitalWrite(led_right,1)		# Send HIGH to switch on LED
+        print ("RIGHT LED ON!")
+        time.sleep(1)
 
-    digitalWrite(led_left,1)		# Send HIGH to switch on LED
-    print ("LEFT LED ON!")
-    time.sleep(1)
+        digitalWrite(led_left,1)		# Send HIGH to switch on LED
+        print ("LEFT LED ON!")
+        time.sleep(1)
             
-    digitalWrite(led_right,0)		# Send LOW to switch off LED
-    print ("RIGHT LED OFF!")
-    time.sleep(1)
+        digitalWrite(led_right,0)		# Send LOW to switch off LED
+        print ("RIGHT LED OFF!")
+        time.sleep(1)
         
         # might have to adjust the above code to get it to work
