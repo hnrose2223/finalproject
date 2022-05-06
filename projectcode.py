@@ -32,7 +32,7 @@ pinMode(led_left,"OUTPUT")
 time.sleep(1)
 
 
-lcd.setRGB(0, 128, 0)
+lcd.setRGB(128, 128, 0)
 
 #from ShazamAPI import Shazam
 
