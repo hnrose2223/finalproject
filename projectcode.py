@@ -126,17 +126,17 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
     print("Decoded input: " + str(output))
     
         #Blink the LED
-        digitalWrite(led_right,1)		# Send HIGH to switch on LED
-        print ("RIGHT LED ON!")
-        time.sleep(1)
+    digitalWrite(led_right,1)		# Send HIGH to switch on LED
+    print ("RIGHT LED ON!")
+    time.sleep(1)
 
-        digitalWrite(led_left,1)		# Send HIGH to switch on LED
-        print ("LEFT LED ON!")
-        time.sleep(1)
+    digitalWrite(led_left,1)		# Send HIGH to switch on LED
+    print ("LEFT LED ON!")
+    time.sleep(1)
             
-        digitalWrite(led,0)		# Send LOW to switch off LED
-        print ("RIGHT LED OFF!")
-        time.sleep(1)
+    digitalWrite(led,0)		# Send LOW to switch off LED
+    print ("RIGHT LED OFF!")
+    time.sleep(1)
         
         # might have to adjust the above code to get it to work
     
