@@ -139,24 +139,3 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
     time.sleep(1)
         
         # might have to adjust the above code to get it to work
-except KeyboardInterrupt:
-        # Gracefully shutdown on Ctrl-C
-    lcd.setText('')
-    lcd.setRGB(0, 0, 0)
-        
-        # Turn LED off before stopping
-    digitalWrite(led,0)
-
-except IOError as ioe:
-    if str(ioe) == '121':
-            # Retry after LCD error
-       time.sleep(0.25)
-
-    else:
-       raise
-
-if __name__ == '__main__':
-    if len(sys.argv) != 2 or not os.path.isfile(sys.argv[1]):
-        print("Usage: decode.py [file]")
-        exit(1)
-    main(sys.argv[1])
