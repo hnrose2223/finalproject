@@ -31,7 +31,6 @@ time.sleep(1)
 pinMode(led_left,"OUTPUT")
 time.sleep(1)
 
-
 lcd.setRGB(128, 0, 0)
 
 #from ShazamAPI import Shazam
@@ -45,9 +44,6 @@ def get_max_frq(frq, fft):
             max_frq = frq[idx]
     return max_frq
 def get_peak_frqs(frq, fft):
-    #TODO: implement an algorithm to find the two maximum values in a given array
-    #get the high and low frequency by splitting it in the middle (1000Hz)
-    #spliting the FFT to high and low frequencies
     
     low_frq = frq[0:150]
     high_frq = frq[150:299]
@@ -59,37 +55,17 @@ def get_peak_frqs(frq, fft):
 
 def main(file): # we need to be able to load mp3 file from shazam (?)
     
-    lcd.setRGB(0, 128, 0)
-    lcd.setText_norefresh("song name")
-        #Blink the LED
-    digitalWrite(led_right,1)		# Send HIGH to switch on LED
-    print ("Flash right LED")
-    time.sleep(1)
-    digitalWrite(led_left,1)		# Send HIGH to switch on LED
-    print ("Flash left LED")
-    time.sleep(1)
-
-    digitalWrite(led_left,0)		# Send LOW to switch off LED
-    print ("Flash left LED")
-    time.sleep(1)
-    digitalWrite(led_left,0)		# Send LOW to switch off LED
-    print ("Flash left LED")
-    time.sleep(1)
-    
     print("Importing {}".format(file))
     audio = AudioSegment.from_mp3(file)
-    
-    # Display song name on LCD
-    lcd.setText_norefresh("song name")
 
     sample_count = audio.frame_count()
     sample_rate = audio.frame_rate
     samples = audio.get_array_of_samples()
 
-    print("Number of channels: " + str(audio.channels))
-    print("Sample count: " + str(sample_count))
-    print("Sample rate: " + str(sample_rate))
-    print("Sample width: " + str(audio.sample_width))
+    #print("Number of channels: " + str(audio.channels))
+    #print("Sample count: " + str(sample_count))
+    #print("Sample rate: " + str(sample_rate))
+    #print("Sample width: " + str(audio.sample_width))
 
     period = 1/sample_rate                     #the period of each sample
     duration = sample_count/sample_rate         #length of full audio in seconds
@@ -113,7 +89,7 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
     print()
     i = 1
     
-    while end_index < len(samples): # not sure if this is the correct format, might have to adjust
+    while end_index < len(samples):
         
         print("Sample {}:".format(i))
         i += 1
@@ -127,11 +103,6 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
         
         #TODO: calculate the locations of the upper and lower FFT peak using get_peak_frqs()
         lower_peak,upper_peak = get_peak_frqs(frq,fft)
-        #number = get_number_from_frq(lower_peak,upper_peak)
-
-        #TODO: print the values and find the number that corresponds to the numbers
-        #print("Lower Peak: ",lower_peak)
-        #print("Upper Peak: ",upper_peak)
         
         if (lower_peak < 40): # determine a value to separate high frequencies from low frequencies and blink an LED
             #print("right LED")
