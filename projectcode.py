@@ -105,7 +105,7 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
         #TODO: calculate the locations of the upper and lower FFT peak using get_peak_frqs()
         lower_peak,upper_peak = get_peak_frqs(frq,fft)
         print("lower: ", lower_peak)
-        print("higheer: ",higher_peak)
+        print("higheer: ",upper_peak)
         
         if (lower_peak < 40): # determine a value to separate high frequencies from low frequencies and blink an LED
             #print("right LED")
