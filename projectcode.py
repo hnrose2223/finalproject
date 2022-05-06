@@ -65,14 +65,14 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
     digitalWrite(led_right,1)		# Send HIGH to switch on LED
     print ("Flash right LED")
     time.sleep(1)
-    digitalWrite(led_left,0)		# Send HIGH to switch on LED
-    print ("Flash left LED")
-    time.sleep(1)
-
     digitalWrite(led_left,1)		# Send HIGH to switch on LED
     print ("Flash left LED")
     time.sleep(1)
-    digitalWrite(led_left,0)		# Send HIGH to switch on LED
+
+    digitalWrite(led_left,0)		# Send LOW to switch off LED
+    print ("Flash left LED")
+    time.sleep(1)
+    digitalWrite(led_left,0)		# Send LOW to switch off LED
     print ("Flash left LED")
     time.sleep(1)
     
@@ -130,17 +130,17 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
         #number = get_number_from_frq(lower_peak,upper_peak)
 
         #TODO: print the values and find the number that corresponds to the numbers
-        print("Lower Peak: ",lower_peak)
-        print("Upper Peak: ",upper_peak)
+        #print("Lower Peak: ",lower_peak)
+        #print("Upper Peak: ",upper_peak)
         
         if (lower_peak < 40): # determine a value to separate high frequencies from low frequencies and blink an LED
-            print("right LED")
+            #print("right LED")
             digitalWrite(led_right,1)		# Send HIGH to switch on LED
             #print ("RIGHT LED ON!")
             time.sleep(0.1)
             
         if (upper_peak > 200):
-            print("left LED")
+            #print("left LED")
             digitalWrite(led_left,1)		# Send HIGH to switch on LED
             #print ("LEFT LED ON!")
             time.sleep(0.1)
