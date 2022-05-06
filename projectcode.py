@@ -8,7 +8,7 @@ from pydub import AudioSegment
 import os
 
 MAX_FRQ = 2000
-SLICE_SIZE = 10 #??
+SLICE_SIZE = 1 #??
 WINDOW_SIZE = 1 #seconds?
 
 sys.path.append('../../Software/Python/')
@@ -104,6 +104,8 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
         
         #TODO: calculate the locations of the upper and lower FFT peak using get_peak_frqs()
         lower_peak,upper_peak = get_peak_frqs(frq,fft)
+        print("lower: ", lower_peak)
+        print("higheer: ",higher_peak)
         
         if (lower_peak < 40): # determine a value to separate high frequencies from low frequencies and blink an LED
             #print("right LED")
