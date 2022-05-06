@@ -91,7 +91,7 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
     
     while end_index < len(samples):
         
-        print("Sample {}:".format(i))
+        #print("Sample {}:".format(i))
         i += 1
     
         #TODO: grab the sample slice and perform FFT on it
@@ -106,18 +106,15 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
         
         if (lower_peak < 40): # determine a value to separate high frequencies from low frequencies and blink an LED
             #print("right LED")
+            digitalWrite(led_left,0)
             digitalWrite(led_right,1)		# Send HIGH to switch on LED
-            #print ("RIGHT LED ON!")
             #time.sleep(0.1)
             
         if (upper_peak > 200):
             #print("left LED")
+            digitalWrite(led_right,0)
             digitalWrite(led_left,1)		# Send HIGH to switch on LED
-            #print ("LEFT LED ON!")
             #time.sleep(0.1)
-        
-        digitalWrite(led_right,0)
-        digitalWrite(led_left,0)
         
         #Incrementing the start and end window for FFT analysis
         start_index += int(WINDOW_SIZE*sample_rate)
