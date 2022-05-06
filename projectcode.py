@@ -25,7 +25,10 @@ from grovepi import *
 led_right = 4
 led_left = 3
 
-pinMode(led,"OUTPUT")
+pinMode(led_right,"OUTPUT")
+time.sleep(1)
+
+pinMode(led_left,"OUTPUT")
 time.sleep(1)
 
 
