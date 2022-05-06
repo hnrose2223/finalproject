@@ -137,13 +137,13 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
             #print("right LED")
             digitalWrite(led_right,1)		# Send HIGH to switch on LED
             #print ("RIGHT LED ON!")
-            time.sleep(0.1)
+            #time.sleep(0.1)
             
         if (upper_peak > 200):
             #print("left LED")
             digitalWrite(led_left,1)		# Send HIGH to switch on LED
             #print ("LEFT LED ON!")
-            time.sleep(0.1)
+            #time.sleep(0.1)
         
         digitalWrite(led_right,0)
         digitalWrite(led_left,0)
