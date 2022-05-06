@@ -32,7 +32,7 @@ pinMode(led_left,"OUTPUT")
 time.sleep(1)
 
 
-lcd.setRGB(0, 128, 0)
+lcd.setRGB(128, 0, 0)
 
 #from ShazamAPI import Shazam
 
@@ -92,8 +92,6 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
     end_index = start_index + slice_sample_size      #find the ending index for the slice
     output = ''
    
-    
-
     print()
     i = 1
     
@@ -130,7 +128,8 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
     print("Decoded input: " + str(output))
     
     while True:
-    
+        lcd.setRGB(0, 128, 0)
+        lcd.setText_norefresh("song name")
         #Blink the LED
         digitalWrite(led_right,1)		# Send HIGH to switch on LED
         print ("RIGHT LED ON!")
