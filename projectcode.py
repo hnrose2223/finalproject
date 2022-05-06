@@ -22,8 +22,8 @@ from grovepi import *
 
 # Connect one of the Grove LED to digital port D4
 # Connect another Grove LED to digital port D3
-led = 4
-led2 = 3
+led_right = 4
+led_left = 3
 
 pinMode(led,"OUTPUT")
 time.sleep(1)
@@ -125,17 +125,20 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
     print("Program completed")
     print("Decoded input: " + str(output))
     
-    try:
-            #Blink the LED
-            digitalWrite(led,1)		# Send HIGH to switch on LED
-            print ("LED ON!")
-            time.sleep(1)
+        #Blink the LED
+        digitalWrite(led_right,1)		# Send HIGH to switch on LED
+        print ("RIGHT LED ON!")
+        time.sleep(1)
 
-            digitalWrite(led,0)		# Send LOW to switch off LED
-            print ("LED OFF!")
-            time.sleep(1)
+        digitalWrite(led_left,1)		# Send HIGH to switch on LED
+        print ("LEFT LED ON!")
+        time.sleep(1)
+            
+        digitalWrite(led,0)		# Send LOW to switch off LED
+        print ("RIGHT LED OFF!")
+        time.sleep(1)
         
-                # might have to adjust the above code to get it to work
+        # might have to adjust the above code to get it to work
     
     except KeyboardInterrupt:
         # Gracefully shutdown on Ctrl-C
