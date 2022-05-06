@@ -8,7 +8,7 @@ from pydub import AudioSegment
 import os
 
 MAX_FRQ = 2000
-SLICE_SIZE = 1 #seconds
+SLICE_SIZE = 10
 WINDOW_SIZE = 1 #seconds
 
 sys.path.append('../../Software/Python/')
@@ -144,7 +144,10 @@ def main(file): # we need to be able to load mp3 file from shazam (?)
             digitalWrite(led_left,1)		# Send HIGH to switch on LED
             #print ("LEFT LED ON!")
             time.sleep(0.1)
-
+        
+        digitalWrite(led_right,0)
+        digitalWrite(led_left,0)
+        
         #Incrementing the start and end window for FFT analysis
         start_index += int(WINDOW_SIZE*sample_rate)
         end_index = start_index + slice_sample_size
