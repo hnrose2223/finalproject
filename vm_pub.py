@@ -46,22 +46,34 @@ def Shzm(mp3):
 
 #records computer microphone and saves as mp3	
 def microphone():
-	fs = 44100 #sample rate
-	seconds = 7 #duration
-	myrecording = sd.rec(int(seconds *fs), samplerate = fs, channels = 2)
-	sd.wait()
-	write('t.wav', fs, myrecording)
-	sound = AudioSegment.from_wav('t.wav')
-	sound.export('song.mp3', format = 'mp3')
-	Shzm('song.mp3')
+	global song_state
+	if(song_state == 1):
+		fs = 44100 #sample rate
+		seconds = 1 #duration
+		myrecording = sd.rec(int(seconds *fs), samplerate = fs, channels = 2)
+		sd.wait()
+		write('t.wav', fs, myrecording)
+		sound = AudioSegment.from_wav('t.wav')
+		sound.export('song.mp3', format = 'mp3')
+		FFT('song.mp3')
+	else:
+		fs = 44100 #sample rate
+		seconds = 5 #duration
+		myrecording = sd.rec(int(seconds *fs), samplerate = fs, channels = 2)
+		sd.wait()
+		write('t.wav', fs, myrecording)
+		sound = AudioSegment.from_wav('t.wav')
+		sound.export('song.mp3', format = 'mp3')
+		Shzm('song.mp3')
+	
 
 #converts microphone audio to FFT to adjust light of LED on RPI
-def FFT():
+def FFT(mp3):
 	i = 0 #TO DO incorperate FFT page
 	
 	#client.publish("audIOT/FFT", #publish frequency stuff for LED
-	print("Importing {}".format(file)) # file is the mp3 file
-    	audio = AudioSegment.from_mp3(file)
+	print("Importing {}".format(mp3)) # file is the mp3 file
+    	audio = AudioSegment.from_mp3(mp3)
 
     	sample_count = audio.frame_count()
     	sample_rate = audio.frame_rate
@@ -132,12 +144,13 @@ if __name__ == '__main__':
 	client.on_connect = on_connect
 	client.connect(host="eclipse.usc.edu", port=11000, keepalive=60)
 	client.loop_start()
-
+	global song_state
+	song_State = 0
 	while True:
 		microphone()
 		##transmit frequency to pi
     	
 		##transmit song name to pi
-		time.sleep(1)
+		time.sleep(.1)
             
 
