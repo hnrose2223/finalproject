@@ -16,22 +16,35 @@ def gpi_setup():
     
     #UPDATE
 
-    #led setup
-    global PORT_LED
-    PORT_LED = 2   # D2 ~ port for LED
-    pinMode(PORT_LED, "OUTPUT")
-    digitalWrite(PORT_LED, 0)
+    #right led setup
+    global PORT_RLED
+    PORT_RLED = 2   # D2 ~ port for LED
+    pinMode(PORT_RLED, "OUTPUT")
+    digitalWrite(PORT_RLED, 0)
+        
+    #right led setup
+    global PORT_LLED
+    PORT_LLED = 2   # D2 ~ port for LED
+    pinMode(PORT_LLED, "OUTPUT")
+    digitalWrite(PORT_LLED, 0)
 
 
 #LED subscription based on song frequency
 def LED(client, userdata, message):
     command = str(message.payload, "utf-8")
-    #turn on LED
-    if(command == "LED_ON"):
-    	digitalWrite(PORT_LED,1)
-    #else turn off LED
+    #turn on Right LED on
+    if(command == "RLED_ON"):
+    	digitalWrite(PORT_RLED,1)
+    #else turn off Right LED
     else:
-    	digitalWrite(PORT_LED,0)
+    	digitalWrite(PORT_RLED,0)
+
+    #turn on Left LED on
+    if(command == "LLED_ON"):
+    	digitalWrite(PORT_LLED,1)
+    #else turn off Left LED
+    else:
+    	digitalWrite(PORT_LLED,0)
     
 
 #prints Song name and Title on PI LCD screen
