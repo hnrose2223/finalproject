@@ -14,7 +14,7 @@ from ShazamAPI import Shazam
 import json
 import matplotlib.pyplot as plt
 import numpy as np
-
+from pynput import keyboard
 #no subscritptions, just connect to server
 def on_connect(client, userdata, flags, rc):
 	print("Connected to server (i.e., broker) with result code "+str(rc))
@@ -32,35 +32,64 @@ def Shzm(mp3):
 	shazam = Shazam(mp3_file_content_to_recognize)
 	recognize_generator = shazam.recognizeSong()
 	songJSON = (next(recognize_generator))[1]
-	print("test")
-	try: 
+	
+	try: 		
 		Title = songJSON["track"]["title"]
 		Artist = songJSON["track"]["subtitle"]
 		client.publish("audIOT/SHAZAM", Title + "\n" + Artist)
 		client.publish("audIOT/FFT","LED_ON")
 		song_state = 1
+		print("song detected")
 	except:
-		#print("cannot find song")
+		print("cannot find song")
 		client.publish("audIOT/SHAZAM","No Song \nDetected")
 		client.publish("audIOT/FFT","LED_OFF")
 		song_state = 0
 
-
+def on_press(key):
+	global song_state
+	try: 
+		k = key.char # single-char key
+	except: 
+		k = key.name # other keys 
+	if k == 's':
+		print("Shazam Activated")
+		song_state = 0
+        #send "w" character to rpi
 #records computer microphone and saves as mp3	
 def microphone():
 	global song_state
 	if(song_state == 1):
 		fs = 44100 #sample rate
-		seconds = 1 #duration
+		seconds = .15 #duration
+		print("recording")
 		myrecording = sd.rec(int(seconds *fs), samplerate = fs, channels = 2)
 		sd.wait()
 		write('t.wav', fs, myrecording)
 		sound = AudioSegment.from_wav('t.wav')
 		sound.export('song.mp3', format = 'mp3')
 		FFT('song.mp3')
+		sample_count = fs * seconds
+		"""
+		for i  in range(len(myrecording)):
+			if(myrecording[i] > .001):
+				count = 0
+				break
+			if(i == len(myrecording -1)):
+				count = count = 1
+	
+		#if silent for 5 seconds do shazam
+		if(abs(myrecording.any()) > .1):
+			count = 0
+		else:
+			count = count + 1
+		if(count == 35):
+			song_state - 0
+		"""
+		
 	else:
 		fs = 44100 #sample rate
-		seconds = 5 #duration
+		seconds = 3 #duration
 		myrecording = sd.rec(int(seconds *fs), samplerate = fs, channels = 2)
 		sd.wait()
 		write('t.wav', fs, myrecording)
@@ -75,7 +104,7 @@ def get_max_frq(frq, fft):
 	for idx in range(len(fft)):
 		if abs(fft[idx]) > max_fft:
 			max_fft = abs(fft[idx])
-		max_frq = frq[idx]
+			max_frq = frq[idx]
 	return max_frq
 def get_peak_frqs(frq, fft):
     	
@@ -90,8 +119,9 @@ def get_peak_frqs(frq, fft):
 
 #converts microphone audio to FFT to adjust light of LED on RPI
 def FFT(mp3):
-
-	SLICE_SIZE = 1
+	global count
+	count = 0
+	SLICE_SIZE = .15
 	MAX_FRQ = 2000
 	WINDOW_SIZE = 1 
 	#client.publish("audIOT/FFT", #publish frequency stuff for LED
@@ -118,7 +148,7 @@ def FFT(mp3):
 	start_index = 0                                 #set the starting index at 0
 	end_index = start_index + slice_sample_size      #find the ending index for the slice
 	output = ''
-   
+	
 	print()
 	i = 1
    	 
@@ -135,11 +165,13 @@ def FFT(mp3):
 		fft = sample_slice_fft[range(max_frq_idx)]
         
         	#TODO: calculate the locations of the upper and lower FFT peak using get_peak_frqs()
-		lower_peak,upper_peak = get_peak_frqs(frq,fft)
-		print("lower: ", lower_peak)
-		print("higheer: ",upper_peak)
-        
-		if (lower_peak < 40): # determine a value to separate high frequencies from low frequencies and blink an LED
+		#lower_peak,upper_peak = get_peak_frqs(frq,fft)
+		peak = get_max_frq(frq,fft)
+		print(peak)
+		#print("lower: ", lower_peak)
+		#print("higheer: ",upper_peak)
+        	
+		if (peak > 40 and peak < 200): # determine a value to separate high frequencies from low frequencies and blink an LED
            	 #print("right LED")
             		#digitalWrite(led_right,1)		# Send HIGH to switch on LED
 			client.publish("audIOT/FFT","RLED_ON")
@@ -148,14 +180,14 @@ def FFT(mp3):
 		else:
             		client.publish("audIOT/FFT","RLED_OFF")
             
-		if (upper_peak > 200):
+		if (peak > 200):
            	 #print("left LED")
             		#digitalWrite(led_left,1)		# Send HIGH to switch on LED
 			client.publish("audIOT/FFT","LLED_ON")
             		#time.sleep(0.1)
             		#digitalWrite(led_left,0)
 		else:
-            		client.publsih("audIOT/FFT","LLED_OFF")
+            		client.publish("audIOT/FFT","LLED_OFF")
         
         	#Incrementing the start and end window for FFT analysis
 		start_index += int(WINDOW_SIZE*sample_rate)
@@ -166,6 +198,8 @@ def FFT(mp3):
 
 if __name__ == '__main__':
 	#this section is covered in publisher_and_subscriber_example.py
+	lis = keyboard.Listener(on_press=on_press)
+	lis.start() # start to listen on a separate thread
 	client = mqtt.Client()
 	client.on_message = on_message
 	client.on_connect = on_connect

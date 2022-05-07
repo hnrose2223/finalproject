@@ -14,8 +14,9 @@ from grove_rgb_lcd import *
 #sets up LED
 def gpi_setup():
     
-    #UPDATE
-
+    #loading screen
+    setText("Loading")
+    setRGB(30,30,30)
     #right led setup
     global PORT_RLED
     PORT_RLED = 2   # D2 ~ port for LED
