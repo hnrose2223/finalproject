@@ -69,10 +69,31 @@ def microphone():
 		Shzm('song.mp3')
 	
 
+def get_max_frq(frq, fft):
+	max_frq = 0
+	max_fft = 0
+	for idx in range(len(fft)):
+		if abs(fft[idx]) > max_fft:
+			max_fft = abs(fft[idx])
+		max_frq = frq[idx]
+	return max_frq
+def get_peak_frqs(frq, fft):
+    	
+	low_frq = frq[0:150]
+	high_frq = frq[150:299]
+    
+	low_frq_fft = fft[0:150]
+	high_frq_fft = fft[150:299]
+
+	return (get_max_frq(low_frq, low_frq_fft), get_max_frq(high_frq, high_frq_fft))
+
+
 #converts microphone audio to FFT to adjust light of LED on RPI
 def FFT(mp3):
-	i = 0 #TO DO incorperate FFT page
-	
+
+	SLICE_SIZE = 1
+	MAX_FRQ = 2000
+	WINDOW_SIZE = 1 
 	#client.publish("audIOT/FFT", #publish frequency stuff for LED
 	print("Importing {}".format(mp3)) # file is the mp3 file
 	audio = AudioSegment.from_mp3(mp3)

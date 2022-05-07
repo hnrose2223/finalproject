@@ -24,7 +24,7 @@ def gpi_setup():
         
     #right led setup
     global PORT_LLED
-    PORT_LLED = 2   # D2 ~ port for LED
+    PORT_LLED = 3  # D2 ~ port for LED
     pinMode(PORT_LLED, "OUTPUT")
     digitalWrite(PORT_LLED, 0)
 
